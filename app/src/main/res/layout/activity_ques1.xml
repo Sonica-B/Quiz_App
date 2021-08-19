@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Question1"
+    android:background="@drawable/gradient_score">
+
+
+    <TextView
+        android:id="@+id/quenum"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/round_styles"
+        android:backgroundTint="#FAD755"
+        android:gravity="center"
+        android:shadowColor="#888383"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="3"
+        android:text="1/3"
+        android:textColor="#F43232"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/question"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.144" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="156dp"
+        android:layout_height="278dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/quegirl" />
+
+    <TextView
+        android:id="@+id/question"
+        android:layout_width="292dp"
+        android:layout_height="91dp"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:shadowColor="#6A6969"
+
+        android:shadowDx="5"
+        android:shadowDy="5"
+        android:shadowRadius="5"
+        android:text="Question 1"
+        android:textAlignment="center"
+        android:textColor="#F8F6F6"
+        android:textSize="40sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.388" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="420dp"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:gravity="bottom"
+        android:foregroundGravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/question">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="50"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/option1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="50"
+                android:backgroundTint="#F37C57"
+                android:text="Option1"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="200dp"
+                tools:layout_editor_absoluteY="473dp" />
+
+            <Button
+                android:id="@+id/option2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="50"
+                android:backgroundTint="@color/yellow"
+                android:text="Option2"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="200dp"
+                tools:layout_editor_absoluteY="429dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="50"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/option3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="50"
+                android:backgroundTint="#87CC3E"
+                android:text="Option3"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="200dp"
+                tools:layout_editor_absoluteY="473dp" />
+
+            <Button
+                android:id="@+id/option4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:backgroundTint="#40C4FF"
+                android:layout_marginRight="10dp"
+                android:layout_weight="50"
+                android:text="Option4"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="200dp"
+                tools:layout_editor_absoluteY="429dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
