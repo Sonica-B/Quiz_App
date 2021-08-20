@@ -2,27 +2,21 @@ package com.example.quizapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.protobuf.StringValue;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Splash extends AppCompatActivity {
 
-    private List<Questions> quelist;
+    //public static List<Questions> quelist;
     private FirebaseFirestore firestore ;
 
     @Override
@@ -33,7 +27,7 @@ public class Splash extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         firestore = FirebaseFirestore.getInstance();
-        quelist = new ArrayList<>();
+        //quelist = new ArrayList<>();
 
       new Thread(){
             public void run(){
@@ -41,27 +35,45 @@ public class Splash extends AppCompatActivity {
             }
       }.start();
     }
-    private void loadData() {
-        quelist.clear();
-        firestore.collection("Questions").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    public void loadData() {
+       // quelist.clear();
+        Task<QuerySnapshot> doc = firestore.collection("Questions").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                Intent intent = new Intent(Splash.this, MainActivity.class);
+                Splash.this.startActivity(intent);
+                Splash.this.finish();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(),"Failed to fetch data", Toast.LENGTH_SHORT).show();
+            }
+        });
+             /*   .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getApplicationContext(),"Failed to fetch data",Toast.LENGTH_SHORT).show();
+                    }
+
+                });*/
+               /* if(task.isSuccessful()){
                     QuerySnapshot questions = task.getResult();
-
-                    for (QueryDocumentSnapshot doc : questions){
-                        quelist.add(new Questions(doc.getString("Que"),
-                                doc.getString("Option 1"),
-                                doc.getString("Option 2"),
-                                doc.getString("Option 3"),
-                                doc.getString("Option 4"),
-                                Integer.valueOf(doc.getString("Answer"))
-                        ));
-
+                    if(questions.exists) {
+                        for (QueryDocumentSnapshot doc : questions) {
+                            quelist.add(new Questions(doc.getString("Que"),
+                                    doc.getString("Option 1"),
+                                    doc.getString("Option 2"),
+                                    doc.getString("Option 3"),
+                                    doc.getString("Option 4"),
+                                    Integer.valueOf(doc.getString("Answer"))
+                            ));
+                        }
                         Intent intent = new Intent(Splash.this,MainActivity.class);
                         startActivity(intent);
-                        Splash.this.finish();
                     }
+                       // Splash.this.finish();
+
                     else {
                         Toast.makeText(Splash.this,"No Questions Exists",Toast.LENGTH_SHORT).show();
                         finish();
@@ -72,5 +84,7 @@ public class Splash extends AppCompatActivity {
                 }
             }
         });
-    }
+    }*/
+}
+
 }

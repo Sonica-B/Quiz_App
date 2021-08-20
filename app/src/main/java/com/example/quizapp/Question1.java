@@ -16,7 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,9 +30,9 @@ public class Question1 extends AppCompatActivity implements View.OnClickListener
     //AnimationDrawable AnimDraw;
     private TextView question,que_count;
     private Button option1, option2, option3, option4;
-  //  private List<Questions> questionList;
-    private LottieAnimationView confetti;
-    private Dialog dialog,loadingDialog;
+    private List<Questions> questionList;
+   // private LottieAnimationView confetti;
+    private Dialog dialog;//loadingDialog;
     private int score;
     private FirebaseFirestore firestore;
 
@@ -68,7 +67,8 @@ public class Question1 extends AppCompatActivity implements View.OnClickListener
         option4.setOnClickListener(this);
 
         firestore = FirebaseFirestore.getInstance();
-
+        questionList = new ArrayList<>();
+        getQuestionsList();
        /* loadingDialog = new Dialog(Question1.this);
         loadingDialog.setContentView(R.layout.loading_progressbar);
         loadingDialog.setCancelable(false);
@@ -76,20 +76,46 @@ public class Question1 extends AppCompatActivity implements View.OnClickListener
         loadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         loadingDialog.show();*/
 
-        getQuestionsList();
+
     }
 
     private void getQuestionsList()
     {
-       // questionList = new ArrayList<>();
+
 
        /* questionList.add(new Questions("Question 1","Option 1","Option 2","Option 3","Option 4",2));
         questionList.add(new Questions("Question 2","Option 1","Option 2","Option 3","Option 4",1));
         questionList.add(new Questions("Question 3","Option 1","Option 2","Option 3","Option 4",3));*/
 
         firestore.collection("Questions").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            QuerySnapshot questions = task.getResult();
+
+                            for (QueryDocumentSnapshot doc : questions){
+                                questionList.add(new Questions(doc.getString("Que"),
+                                        doc.getString("Option 1"),
+                                        doc.getString("Option 2"),
+                                        doc.getString("Option 3"),
+                                        doc.getString("Option 4"),
+                                        Integer.valueOf(doc.getString("Answer"))
+                                ));
+                            }
+
+                            setQuestion();
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(),"No Questions Found",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });/*.addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(),"Failed to fetch data", Toast.LENGTH_SHORT).show();
+
+            }
+        });*/
                 /*if (task.isSuccessful()){
                     QuerySnapshot questions = task.getResult();
 
@@ -101,15 +127,15 @@ public class Question1 extends AppCompatActivity implements View.OnClickListener
                                 doc.getString("Option 4"),
                                 Integer.valueOf(doc.getString("Answer"))
                         ));
-                    }*/
+                    }
 
-                    setQuestion();
+
                 }
-               /* else {
+               else {
                     Toast.makeText(Question1.this, task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-                }*/
+                }
                // loadingDialog.cancel();
-            });
+            });*/
 
 
     }
